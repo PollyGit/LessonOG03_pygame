@@ -1,7 +1,8 @@
 import random
 
 import pygame  #импортируем библиотеку
-import randint from random
+#import randint from random
+from random import randint
 
 pygame.init()  #инициализируем библиотеку
 
@@ -20,7 +21,7 @@ pygame.display.set_icon(icon)
 
 
 #создание объекта, по которому будем стрелять, его параметры
-target_image = pygame.display.load('image/target_tir.png')  #(с сайта klipartz)
+target_image = pygame.image.load('image/target_tir.png')  #(с сайта klipartz)
 target_width = 50
 target_height = 50
 #Задаем рандомные координаты x,y появления цели.
@@ -32,12 +33,29 @@ target_y = random.randint(0, SCREEN_HEIGHT - target_height)
 color = (random.randint(0, 255), random.randint(0, 255),random.randint(0, 255))
 
 
-
-
-
 #создание игрового цикла, в данном случае while
 running = True
 while True:
-    pass
+    #заливка цветом
+    screen.fill(color)
+    #отслеживание всех событий в игре с помощью цикла for
+    #event - переменная, которая будет содержать список всех событий
+    #pygame.event.get() получить все события, представлены в виде коллекции
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:  #условие завершения цикла for, нажатие на крестик
+            running = False
+        #нажатие на кнопку мыши и определение, в каком месте она нажата, координаты
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            # попала ли в область цели
+            if target_x < mouse_x < (target_x +target_width) and target_y < mouse_y < (target_y +target_height):
+                #снова выдаем рандомные координаты
+                target_x = random.randint(0, SCREEN_WIDTH - target_width)
+                target_y = random.randint(0, SCREEN_HEIGHT - target_height)
+    #указываем отрисовку объекта target_image и его координаты
+    screen.blit(target_image, (target_x, target_y))
+    #ВАЖНО! Для обновления экрана, тк в игре все происходит покадрово
+    pygame.display.update()
+
 
 pygame.quit()  #закрывает окно с игрой, когда цикл завершится
