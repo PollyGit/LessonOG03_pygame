@@ -1,7 +1,6 @@
 import random
 
 import pygame  #импортируем библиотеку
-#import randint from random
 from random import randint
 
 pygame.init()  #инициализируем библиотеку
@@ -35,7 +34,7 @@ color = (random.randint(0, 255), random.randint(0, 255),random.randint(0, 255))
 
 #создание игрового цикла, в данном случае while
 running = True
-while True:
+while running:
     #заливка цветом
     screen.fill(color)
     #отслеживание всех событий в игре с помощью цикла for
